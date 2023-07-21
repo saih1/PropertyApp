@@ -74,4 +74,18 @@ dependencies {
     kaptAndroidTest 'com.google.dagger:hilt-compiler:2.46.1'
     testImplementation 'com.google.dagger:hilt-android-testing:2.46.1'
     kaptTest 'com.google.dagger:hilt-compiler:2.46.1'
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
+    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
+
+    // Moshi
+    implementation 'com.squareup.moshi:moshi-kotlin:1.15.0'
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
 }
