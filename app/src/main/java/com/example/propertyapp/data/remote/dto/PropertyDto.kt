@@ -5,7 +5,7 @@ data class PropertyDto(
 )
 
 data class Property(
-    val id: String?,
+    val id: String,
     val auction_date: String?,
     val available_from: String?,
     val bedrooms: Int?,
