@@ -1,7 +1,7 @@
 package com.example.propertyapp.data.remote.dto
 
 data class PropertyDto(
-    val data: List<Property>?
+    val data: List<Property>
 )
 
 data class Property(
@@ -13,13 +13,13 @@ data class Property(
     val carspaces: Int?,
     val date_first_listed: String?,
     val date_updated: String?,
-    val description: String?,
+    val description: String,
     val display_price: String?,
     val currency: String?,
     val location: Location?,
     val owner: Owner?,
     val property_images: List<PropertyImage>?,
-    val agent: Agent?,
+    val agent: Agent,
     val property_type: String?,
     val sale_type: String?
 )
@@ -51,13 +51,13 @@ data class Image(
 )
 
 data class PropertyImage(
-    val id: Int?,
-    val attachment: Image?
+    val id: Int,
+    val attachment: Image
 )
 
 data class Agent(
-    val first_name: String?,
-    val last_name: String?,
-    val company_name: String?,
-    val avatar: Avatar?
+    val first_name: String,
+    val last_name: String,
+    val company_name: String,
+    val avatar: Avatar
 )

@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.propertyapp.common.RequestState
 import com.example.propertyapp.common.Status
-import com.example.propertyapp.data.remote.dto.PropertyDto
+import com.example.propertyapp.domain.model.PropertyEntity
 import com.example.propertyapp.ui.theme.PropertyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,9 +38,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    // TODO: Need to find a better way
-                    // This is only for testing
-                    val properties: RequestState<PropertyDto> by vm.properties.collectAsState()
+                    // TODO: Need to find a better way, this is only for testing
+                    val properties: RequestState<List<PropertyEntity>> by vm.properties.collectAsState()
 
                     Column(
                         Modifier
@@ -56,11 +55,11 @@ class MainActivity : ComponentActivity() {
                         when (properties.status) {
                             Status.SUCCESS -> {
                                 LazyColumn {
-                                    items(items = properties.data?.data ?: emptyList(), key = { it.id })
+                                    items(items = properties.data ?: emptyList(), key = { it.id })
                                     { property ->
                                         Text(
                                             modifier = Modifier.padding(5.dp),
-                                            text = "🚀 ${property.description}"
+                                            text = "🚀 ${property.agentName}"
                                         )
                                         Divider(modifier = Modifier.padding(vertical = 5.dp))
                                     }
@@ -76,8 +75,6 @@ class MainActivity : ComponentActivity() {
                                 CircularProgressIndicator()
                             }
                         }
-
-
                     }
                 }
             }
