@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.propertyapp.common.RequestState
 import com.example.propertyapp.common.Status
 import com.example.propertyapp.domain.model.PropertyEntity
-import com.example.propertyapp.ui.theme.PropertyAppTheme
+import com.example.propertyapp.view.theme.PropertyAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.example.propertyapp.ui.theme
+package com.example.propertyapp.view.theme
 
 import androidx.compose.ui.graphics.Color
 
