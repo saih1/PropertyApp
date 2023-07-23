@@ -15,22 +15,22 @@ data class PropertyEntity(
     val auctionDate: String,
     val description: String
 ) {
-    // TODO: Remove after testing
+    // For Composable previews
     companion object {
         val DEFAULT = PropertyEntity(
             id = 0,
-            agentName = "John Smith",
+            agentName = "Agent Name",
             agentAvatar = "",
-            agentCompany = "Ray White",
-            propertyAddress = "",
+            agentCompany = "Agent Company",
+            propertyAddress = "100 Property Address, Address, 1000",
             bedroomCount = 2,
             bathroomCount = 1,
             carspaceCount = 1,
             propertyImage = "",
-            propertyPrice = "",
-            propertyType = "",
+            propertyPrice = "$900000",
+            propertyType = "Type",
             auctionDate = "",
-            description = ""
+            description = "Description"
         )
     }
 }
