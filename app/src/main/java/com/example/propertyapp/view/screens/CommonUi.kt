@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
-
 package com.example.propertyapp.view.screens
 
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -112,11 +109,20 @@ fun PropertyInformation(
         horizontalAlignment = Alignment.Start,
         modifier = modifier.padding(5.dp)
     ) {
-        // Display price
         if (isDetailView) {
+            // Display price
             Text(
                 text = property.propertyPrice,
                 style = MaterialTheme.typography.bodyMedium,
+                textAlign = TextAlign.Start,
+                fontWeight = FontWeight.Normal,
+                maxLines = 1,
+                modifier = Modifier.padding(5.dp)
+            )
+            // Auction date
+            Text(
+                text = "Auction date: ${property.auctionDate}",
+                style = MaterialTheme.typography.bodySmall,
                 textAlign = TextAlign.Start,
                 fontWeight = FontWeight.Normal,
                 maxLines = 1,
