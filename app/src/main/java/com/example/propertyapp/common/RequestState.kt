@@ -3,24 +3,44 @@ package com.example.propertyapp.common
 import com.example.propertyapp.common.Status.*
 
 enum class Status {
-    SUCCESS, ERROR, IDLE, LOADING
+    SUCCESS,
+    ERROR,
+    IDLE,
+    LOADING
 }
 
 data class RequestState<out T>(
     val status: Status,
     val data: T?,
+    val throwable: Throwable?
 ) {
     companion object {
         fun <T> success(data: T?): RequestState<T> =
-            RequestState(SUCCESS, data)
+            RequestState(
+                status = SUCCESS,
+                data = data,
+                throwable = null
+            )
 
         fun <T> error(throwable: Throwable): RequestState<T> =
-            RequestState(ERROR, null)
+            RequestState(
+                status = ERROR,
+                data = null,
+                throwable = throwable
+            )
 
         fun <T> loading(): RequestState<T> =
-            RequestState(LOADING, null)
+            RequestState(
+                status = LOADING,
+                data = null,
+                throwable = null
+            )
 
         fun <T> idle(): RequestState<T> =
-            RequestState(IDLE, null)
+            RequestState(
+                status = IDLE,
+                data = null,
+                throwable = null
+            )
     }
 }
