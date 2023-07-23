@@ -55,3 +55,8 @@ The UI layer establishes a clear separation of concerns, with the ViewModel sole
 
 **Google Truth**
 - Personal preference purely due to readability and expressiveness.
+
+---
+## 🧪 Local Unit Test
+<img width="60%" alt="unitTestSS" src="https://github.com/saih1/PropertyApp/assets/72930376/e40d3e62-d0c6-4c68-9514-3b6c04fea063">
+
