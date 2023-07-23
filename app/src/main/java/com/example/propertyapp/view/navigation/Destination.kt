@@ -1,4 +1,4 @@
-package com.example.propertyapp.common
+package com.example.propertyapp.view.navigation
 
 enum class Destination {
     LIST_SCREEN,

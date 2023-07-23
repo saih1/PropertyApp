@@ -32,7 +32,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import coil.compose.AsyncImage
 import com.example.propertyapp.R
-import com.example.propertyapp.common.Destination
+import com.example.propertyapp.view.navigation.Destination
 import com.example.propertyapp.common.Status
 import com.example.propertyapp.domain.model.PropertyEntity
 import com.example.propertyapp.view.PropertyViewModel
