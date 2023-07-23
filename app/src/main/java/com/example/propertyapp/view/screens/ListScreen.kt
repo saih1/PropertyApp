@@ -2,6 +2,8 @@
 
 package com.example.propertyapp.view.screens
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -36,10 +38,10 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import coil.compose.AsyncImage
 import com.example.propertyapp.R
-import com.example.propertyapp.view.navigation.Destination
 import com.example.propertyapp.common.Status
 import com.example.propertyapp.domain.model.PropertyEntity
 import com.example.propertyapp.view.PropertyViewModel
+import com.example.propertyapp.view.navigation.Destination
 
 fun NavGraphBuilder.listNavGraph(
     vm: PropertyViewModel,
@@ -47,7 +49,21 @@ fun NavGraphBuilder.listNavGraph(
     onErrorRetryClick: () -> Unit,
     onRefreshClick: () -> Unit
 ) {
-    composable(route = Destination.LIST_SCREEN.name) {
+    composable(
+        route = Destination.LIST_SCREEN.name,
+        enterTransition = {
+            slideIntoContainer(
+                animationSpec = tween(500),
+                towards = AnimatedContentTransitionScope.SlideDirection.Start
+            )
+        },
+        exitTransition = {
+            this.slideOutOfContainer(
+                animationSpec = tween(500),
+                towards = AnimatedContentTransitionScope.SlideDirection.End
+            )
+        }
+    ) {
         PropertyListScreen(
             vm = vm,
             onItemClick = { onItemClick(it) },
