@@ -24,8 +24,8 @@ fun PropertyDto.asEntity(): List<PropertyEntity> =
         )
     }
 
-fun String.toReadableDate(): String? {
-    return try { ZonedDateTime.parse(this)
-        .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
-    } catch (e: Exception) { null }
+fun String.toReadableDate(): String? = try {
+    ZonedDateTime.parse(this).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+} catch (e: Exception) {
+    null
 }
