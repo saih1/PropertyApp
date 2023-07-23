@@ -2,6 +2,8 @@
 
 package com.example.propertyapp.view.screens
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -42,7 +44,21 @@ fun NavGraphBuilder.detailNavGraph(
     vm: PropertyViewModel,
     onBackClick: () -> Unit
 ) {
-    composable(route = Destination.DETAIL_SCREEN.name) {
+    composable(
+        route = Destination.DETAIL_SCREEN.name,
+        enterTransition = {
+            slideIntoContainer(
+                animationSpec = tween(500),
+                towards = AnimatedContentTransitionScope.SlideDirection.Start
+            )
+        },
+        exitTransition = {
+            this.slideOutOfContainer(
+                animationSpec = tween(500),
+                towards = AnimatedContentTransitionScope.SlideDirection.End
+            )
+        }
+    ) {
         DetailScreen(
             vm = vm,
             onBackClick = onBackClick

@@ -90,6 +90,10 @@ dependencies {
     // Navigation with Compose
     implementation "androidx.navigation:navigation-compose:2.6.0"
 
+    // Accompanist Navigation with Compose (DEPRECATED)
+    // Soon will be replaced by androidx.navigation.compose
+    implementation "com.google.accompanist:accompanist-navigation-animation:0.31.5-beta"
+
     // Google Truth
     testImplementation "com.google.truth:truth:1.1.5"
 }

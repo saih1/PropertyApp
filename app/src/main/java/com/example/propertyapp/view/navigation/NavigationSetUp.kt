@@ -1,17 +1,20 @@
+@file:OptIn(ExperimentalAnimationApi::class)
+
 package com.example.propertyapp.view.navigation
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
 import com.example.propertyapp.view.PropertyViewModel
 import com.example.propertyapp.view.screens.detailNavGraph
 import com.example.propertyapp.view.screens.listNavGraph
+import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 @Composable
 fun NavigationSetUp(controller: NavHostController) {
     val vm: PropertyViewModel = viewModel()
-    NavHost(
+    AnimatedNavHost(
         navController = controller,
         startDestination = Destination.LIST_SCREEN.name
     ) {
@@ -21,7 +24,8 @@ fun NavigationSetUp(controller: NavHostController) {
                 vm.selectProperty(it)
                 controller.navigate(Destination.DETAIL_SCREEN.name)
             },
-            onErrorRetryClick = { vm.fetchProperties() }
+            onErrorRetryClick = { vm.fetchProperties() },
+            onRefreshClick = { vm.fetchProperties() }
         )
         detailNavGraph(
             vm = vm,
