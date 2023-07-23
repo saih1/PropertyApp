@@ -10,8 +10,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -40,13 +44,15 @@ import com.example.propertyapp.view.PropertyViewModel
 fun NavGraphBuilder.listNavGraph(
     vm: PropertyViewModel,
     onItemClick: (PropertyEntity) -> Unit,
-    onErrorRetryClick: () -> Unit
+    onErrorRetryClick: () -> Unit,
+    onRefreshClick: () -> Unit
 ) {
     composable(route = Destination.LIST_SCREEN.name) {
         PropertyListScreen(
             vm = vm,
             onItemClick = { onItemClick(it) },
-            onErrorRetryClick = onErrorRetryClick
+            onErrorRetryClick = onErrorRetryClick,
+            onRefreshClick = onRefreshClick
         )
     }
 }
@@ -55,11 +61,16 @@ fun NavGraphBuilder.listNavGraph(
 fun PropertyListScreen(
     vm: PropertyViewModel,
     onItemClick: (PropertyEntity) -> Unit,
-    onErrorRetryClick: () -> Unit
+    onErrorRetryClick: () -> Unit,
+    onRefreshClick: () -> Unit
 ) {
     val properties by vm.properties.collectAsState()
     Scaffold(
-        topBar = { ListTopAppBar() }
+        topBar = {
+            ListTopAppBar(
+                onRefreshClick = onRefreshClick
+            )
+        }
     ) { paddingValues ->
         when (properties.status) {
             Status.SUCCESS -> {
@@ -130,15 +141,29 @@ fun PropertyItemComposable(
 }
 
 @Composable
-fun ListTopAppBar() {
-    TopAppBar(title = {
-        Text(
-            text = "Property App",
-            textAlign = TextAlign.Center,
-            fontFamily = FontFamily.Monospace,
-            fontWeight = FontWeight.ExtraBold
-        )
-    })
+fun ListTopAppBar(
+    onRefreshClick: () -> Unit
+) {
+    TopAppBar(
+        title = {
+            Text(
+                text = "Property App",
+                textAlign = TextAlign.Center,
+                fontFamily = FontFamily.Monospace,
+                fontWeight = FontWeight.ExtraBold
+            )
+        },
+        actions = {
+            IconButton(
+                onClick = onRefreshClick
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Refresh,
+                    contentDescription = "refresh icon"
+                )
+            }
+        }
+    )
 }
 
 /**
@@ -146,7 +171,7 @@ fun ListTopAppBar() {
  */
 @Preview(showBackground = true)
 @Composable
-fun PreviewListTopAppBar() = ListTopAppBar()
+fun PreviewListTopAppBar() = ListTopAppBar {}
 
 @Preview(showBackground = true)
 @Composable

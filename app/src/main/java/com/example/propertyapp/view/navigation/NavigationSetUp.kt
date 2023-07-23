@@ -21,7 +21,8 @@ fun NavigationSetUp(controller: NavHostController) {
                 vm.selectProperty(it)
                 controller.navigate(Destination.DETAIL_SCREEN.name)
             },
-            onErrorRetryClick = { vm.fetchProperties() }
+            onErrorRetryClick = { vm.fetchProperties() },
+            onRefreshClick = { vm.fetchProperties() }
         )
         detailNavGraph(
             vm = vm,
