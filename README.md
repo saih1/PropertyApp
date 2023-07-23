@@ -1,6 +1,12 @@
 # 🏠 PropertyApp
 PropertyApp is a sample Android application developed using Jetpack Compose and follows the Modern App Architecture, incorporating modern design principles and development practices to create a robust and maintainable codebase.
 
+## 📱 Screenshots
+<img src="https://github.com/saih1/PropertyApp/assets/72930376/680b6908-1715-4613-a9bc-f58815f2c6d8" alt="phone_listScreen_light" width="15%">
+<img src="https://github.com/saih1/PropertyApp/assets/72930376/b83abe3c-f1c7-485d-bb52-f1c1b2c9cfb4" alt="phone_listScreen_dark" width="15%">
+<img src="https://github.com/saih1/PropertyApp/assets/72930376/9054e73f-7a16-463e-9e97-e00912c6fb36" alt="phone_detailScreen_light" width="15%">
+<img src="https://github.com/saih1/PropertyApp/assets/72930376/7d1a7e01-8715-4019-b4a5-cd0c52696813" alt="phone_detailScreen_dark" width="15%">
+
 ## 🛠️ Architecture
 The app follows a well-defined and organised architecture to ensure scalability and maintainability. Key architectural principles include:
 
