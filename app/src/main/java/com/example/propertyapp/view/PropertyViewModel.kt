@@ -25,6 +25,9 @@ class PropertyViewModel @Inject constructor(
         MutableStateFlow(RequestState.idle())
     val properties: StateFlow<RequestState<List<PropertyEntity>>> = _properties.asStateFlow()
 
+    private val _selectedProperty: MutableStateFlow<PropertyEntity?> = MutableStateFlow(null)
+    val selectedProperty: StateFlow<PropertyEntity?> = _selectedProperty.asStateFlow()
+
     init { fetchProperties() }
 
     // TODO: Should consider using a use_case to improve testability
@@ -43,5 +46,9 @@ class PropertyViewModel @Inject constructor(
                 _properties.value = RequestState.error(e)
             }
         }
+    }
+
+    fun selectProperty(property: PropertyEntity) {
+        _selectedProperty.value = property
     }
 }
