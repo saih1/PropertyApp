@@ -90,7 +90,8 @@ dependencies {
     // Navigation with Compose
     implementation "androidx.navigation:navigation-compose:2.6.0"
 
-
+    // Google Truth
+    testImplementation "com.google.truth:truth:1.1.5"
 }
 
 // Allow references to generated code
