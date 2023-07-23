@@ -37,3 +37,21 @@ The UI layer serves as the front-end of the application, consuming data from the
 The UI layer establishes a clear separation of concerns, with the ViewModel solely responsible for publishing data, while the UI elements interact with the ViewModel by sending events, forming a unidirectional data flow.
 
 ---
+## 📚 Libraries
+**Dagger-Hilt**
+- Although Koin DI is more appropriate for an app of this size, Hilt is a subjective preference. 
+
+**Retrofit**
+- It makes networking so much easier. 
+
+**Moshi**
+- I think Moshi is a better JSON processor than Gson. Also, I’m more familiar with it. 
+
+**Coil**
+- Image loading library that is light, fast, modern and easy to use (according to https://github.com/coil-kt/coil)
+
+**Accompanist Navigation with Compose**
+- Deprecated because all the functionalities will be in `androidx.navigation.compose` _(Still in Alpha release as of now)_.
+
+**Google Truth**
+- Personal preference purely due to readability and expressiveness.
