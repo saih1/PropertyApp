@@ -8,5 +8,6 @@ import javax.inject.Inject
 class PropertyRepositoryImpl @Inject constructor(
     private val api: PropertyApi
 ) : PropertyRepository {
+    // Consider offline first functionalities
     override suspend fun getProperties(): PropertyDto = api.getProperties()
 }

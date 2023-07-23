@@ -29,7 +29,7 @@ data class PropertyEntity(
             propertyImage = "",
             propertyPrice = "$900000",
             propertyType = "Type",
-            auctionDate = "",
+            auctionDate = "23/10/2020",
             description = "Description"
         )
     }
