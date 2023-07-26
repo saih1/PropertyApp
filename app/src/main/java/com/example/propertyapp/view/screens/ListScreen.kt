@@ -2,22 +2,22 @@
 
 package com.example.propertyapp.view.screens
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -29,49 +29,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import coil.compose.AsyncImage
 import com.example.propertyapp.R
 import com.example.propertyapp.common.Status
 import com.example.propertyapp.domain.model.PropertyEntity
 import com.example.propertyapp.view.PropertyViewModel
-import com.example.propertyapp.view.navigation.Destination
-
-fun NavGraphBuilder.listNavGraph(
-    vm: PropertyViewModel,
-    onItemClick: (PropertyEntity) -> Unit,
-    onErrorRetryClick: () -> Unit,
-    onRefreshClick: () -> Unit
-) {
-    composable(
-        route = Destination.LIST_SCREEN.name,
-        enterTransition = {
-            slideIntoContainer(
-                animationSpec = tween(500),
-                towards = AnimatedContentTransitionScope.SlideDirection.Start
-            )
-        },
-        exitTransition = {
-            this.slideOutOfContainer(
-                animationSpec = tween(500),
-                towards = AnimatedContentTransitionScope.SlideDirection.End
-            )
-        }
-    ) {
-        PropertyListScreen(
-            vm = vm,
-            onItemClick = { onItemClick(it) },
-            onErrorRetryClick = onErrorRetryClick,
-            onRefreshClick = onRefreshClick
-        )
-    }
-}
 
 @Composable
 fun PropertyListScreen(
@@ -96,12 +62,20 @@ fun PropertyListScreen(
                     paddingValues = paddingValues
                 )
             }
-            Status.ERROR -> GenericErrorComposable(
-                onErrorRetryClick = onErrorRetryClick,
-                modifier = Modifier.fillMaxSize()
-            )
-            Status.LOADING -> ProgressBar()
-            else -> {}
+            Status.ERROR -> {
+                GenericErrorComposable(
+                    onErrorRetryClick = onErrorRetryClick,
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+            Status.LOADING -> {
+                ProgressBar(
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+            Status.IDLE -> {
+                // Do nothing
+            }
         }
     }
 }
@@ -112,7 +86,12 @@ fun PropertyListComposable(
     onItemClick: (PropertyEntity) -> Unit,
     paddingValues: PaddingValues = PaddingValues(0.dp)
 ) {
-    LazyColumn(contentPadding = paddingValues) {
+    LazyColumn(
+        contentPadding = paddingValues,
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.padding(horizontal = 8.dp)
+    ) {
         items(
             items = properties,
             key = { it.id }
@@ -133,8 +112,7 @@ fun PropertyItemComposable(
 ) {
     Card(
         onClick = { onClick() },
-        modifier = modifier.padding(15.dp),
-        shape = RoundedCornerShape(25.dp)
+        modifier = modifier
     ) {
         AsyncImage(
             model = property.propertyImage,
@@ -142,16 +120,17 @@ fun PropertyItemComposable(
             contentScale = ContentScale.FillWidth,
             alignment = Alignment.Center,
             modifier = Modifier
-                .padding(top = 15.dp, start = 15.dp, end = 15.dp)
-                .fillMaxWidth()
-                .height(200.dp)
-                .clip(RoundedCornerShape(25.dp)),
+                .padding(8.dp)
+                .clip(shape = CardDefaults.shape)
+                .aspectRatio(ratio = 16 / 9f)
+                .fillMaxWidth(),
             placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
             error = painterResource(id = R.drawable.ic_launcher_foreground)
         )
         PropertyContent(
-            modifier = Modifier.padding(horizontal = 15.dp),
-            property = property
+            property = property,
+            modifier = Modifier
+                .padding(start = 8.dp, end = 8.dp, bottom = 8.dp)
         )
     }
 }
@@ -163,10 +142,10 @@ fun ListTopAppBar(
     TopAppBar(
         title = {
             Text(
-                text = "Property App",
-                textAlign = TextAlign.Center,
-                fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.ExtraBold
+                text = stringResource(id = R.string.app_name),
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.SemiBold
             )
         },
         actions = {

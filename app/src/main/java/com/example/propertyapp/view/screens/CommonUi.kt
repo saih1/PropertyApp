@@ -1,14 +1,14 @@
 package com.example.propertyapp.view.screens
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
@@ -22,28 +22,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.propertyapp.R
 import com.example.propertyapp.domain.model.PropertyEntity
 
 @Composable
-fun ProgressBar() {
+fun ProgressBar(
+    modifier: Modifier = Modifier
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
         contentAlignment = Alignment.Center
     ) {
-        LinearProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        LinearProgressIndicator(
+            modifier = Modifier.align(Alignment.Center)
+        )
     }
 }
 
 @Composable
 fun GenericErrorComposable(
     onErrorRetryClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    iconSize: Dp = 150.dp
 ) {
     Column(
         modifier = modifier,
@@ -51,17 +57,16 @@ fun GenericErrorComposable(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Icon(
-            modifier = Modifier.size(150.dp),
+            modifier = Modifier.size(iconSize),
             painter = painterResource(id = R.drawable.baseline_error_24),
             contentDescription = "error icon",
             tint = MaterialTheme.colorScheme.outline
         )
         Text(
-            text = "Oops!",
+            text = "Oops! Something isn't right.",
             color = MaterialTheme.colorScheme.outline,
             style = MaterialTheme.typography.labelLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(5.dp)
+            textAlign = TextAlign.Center
         )
         TextButton(onClick = onErrorRetryClick) {
             Text(
@@ -76,10 +81,10 @@ fun GenericErrorComposable(
 fun PropertyContent(
     modifier: Modifier = Modifier,
     property: PropertyEntity,
-    isDetailView: Boolean = false
+    isExpended: Boolean = false
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically
+        modifier = modifier
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)
@@ -87,10 +92,12 @@ fun PropertyContent(
             PropertyInformation(
                 modifier = Modifier.weight(0.4f),
                 property = property,
-                isDetailView = isDetailView
+                isExpended = isExpended
             )
             AgentProfile(
-                modifier = Modifier.weight(0.1f),
+                modifier = Modifier
+                    .weight(0.1f)
+                    .align(Alignment.Top),
                 agentName = property.agentName,
                 agentAvatarUrl = property.agentAvatar
             )
@@ -100,74 +107,59 @@ fun PropertyContent(
 
 @Composable
 fun PropertyInformation(
-    modifier: Modifier = Modifier,
     property: PropertyEntity,
-    isDetailView: Boolean = false
+    modifier: Modifier = Modifier,
+    isExpended: Boolean = false
 ) {
     Column(
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start,
-        modifier = modifier.padding(5.dp)
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        if (isDetailView) {
-            // Display price
-            Text(
-                text = property.propertyPrice,
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Start,
-                fontWeight = FontWeight.Normal,
-                maxLines = 1,
-                modifier = Modifier.padding(5.dp)
-            )
-            // Auction date
-            Text(
-                text = "Auction date: ${property.auctionDate}",
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Start,
-                fontWeight = FontWeight.Normal,
-                maxLines = 1,
-                modifier = Modifier.padding(5.dp)
-            )
-        }
         // Agent company
         Text(
             text = property.agentCompany,
-            style = MaterialTheme.typography.headlineSmall,
-            textAlign = TextAlign.Start,
-            fontWeight = FontWeight.SemiBold,
-            maxLines = 1,
-            modifier = Modifier.padding(5.dp)
+            style = MaterialTheme.typography.headlineMedium,
+            maxLines = 1
         )
         // Address
         Text(
             text = property.propertyAddress,
-            color = MaterialTheme.colorScheme.outline,
-            style = MaterialTheme.typography.labelMedium,
-            textAlign = TextAlign.Start,
+            style = MaterialTheme.typography.labelLarge,
             maxLines = 2,
-            modifier = Modifier.padding(5.dp)
+            color = MaterialTheme.colorScheme.outline
         )
+        // Bedroom, Bathroom, Car space
         RoomSpaceQuantityRow(
             bedroomCount = property.bedroomCount,
             bathroomCount = property.bathroomCount,
             carspaceCount = property.carspaceCount
         )
-        if (isDetailView) {
-            // Property Type
+        // Expended
+        if (isExpended) {
+            // Price
+            Text(
+                text = property.propertyPrice,
+                style = MaterialTheme.typography.labelLarge,
+                maxLines = 1
+            )
+            // Auction date
+            Text(
+                text = "Auction date: ${property.auctionDate}",
+                style = MaterialTheme.typography.labelSmall,
+                maxLines = 1
+            )
+            // Property type
             Text(
                 text = "Property type: ${property.propertyType}",
                 style = MaterialTheme.typography.labelSmall,
-                textAlign = TextAlign.Start,
-                fontWeight = FontWeight.Normal,
-                modifier = Modifier.padding(5.dp)
+                maxLines = 1
             )
             // Description
             Text(
                 text = property.description,
-                style = MaterialTheme.typography.bodyMedium,
-                textAlign = TextAlign.Start,
-                fontWeight = FontWeight.Normal,
-                modifier = Modifier.padding(5.dp)
+                style = MaterialTheme.typography.bodySmall,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Start
             )
         }
     }
@@ -177,59 +169,28 @@ fun PropertyInformation(
 fun RoomSpaceQuantityRow(
     bedroomCount: Int,
     bathroomCount: Int,
-    carspaceCount: Int
+    carspaceCount: Int,
+    modifier: Modifier = Modifier
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .wrapContentSize()
-            .padding(5.dp)
+        modifier = modifier.wrapContentSize(),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         // Bedrooms
-        Text(
+        CustomPropertyIconText(
             text = bedroomCount.toString(),
-            modifier = Modifier.padding(2.dp),
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.labelSmall
+            icon = R.drawable.round_bed_24
         )
-        Icon(
-            painter = painterResource(id = R.drawable.round_bed_24),
-            contentDescription = "bedroom icon",
-            modifier = Modifier
-                .size(20.dp)
-                .padding(2.dp)
-        )
-        Spacer(modifier = Modifier.size(5.dp))
-
-        //Bathrooms
-        Text(
+        // Bathrooms
+        CustomPropertyIconText(
             text = bathroomCount.toString(),
-            modifier = Modifier.padding(2.dp),
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.labelSmall
+            icon = R.drawable.round_bathtub_24
         )
-        Icon(
-            painter = painterResource(id = R.drawable.round_bathtub_24),
-            contentDescription = "bathroom icon",
-            modifier = Modifier
-                .size(20.dp)
-                .padding(2.dp)
-        )
-        Spacer(modifier = Modifier.size(5.dp))
-
-        // Car spaces
-        Text(
+        // Carspaces
+        CustomPropertyIconText(
             text = carspaceCount.toString(),
-            modifier = Modifier.padding(2.dp),
-            textAlign = TextAlign.Start,
-            style = MaterialTheme.typography.labelSmall
-        )
-        Icon(
-            painter = painterResource(id = R.drawable.round_car_24),
-            contentDescription = "carspace icon",
-            modifier = Modifier
-                .size(20.dp)
-                .padding(2.dp)
+            icon = R.drawable.round_car_24
         )
     }
 }
@@ -238,16 +199,18 @@ fun RoomSpaceQuantityRow(
 fun AgentProfile(
     agentName: String,
     agentAvatarUrl: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    avatarSize: Dp = 60.dp
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(5.dp)
+        verticalArrangement = Arrangement.Center,
+        modifier = modifier
     ) {
         Box(
             modifier = Modifier
                 .wrapContentSize()
-                .size(60.dp)
+                .size(avatarSize)
         ) {
             AsyncImage(
                 model = agentAvatarUrl,
@@ -259,7 +222,7 @@ fun AgentProfile(
                 error = painterResource(id = R.drawable.ic_launcher_foreground)
             )
         }
-        Spacer(modifier = Modifier.size(2.dp))
+        Spacer(modifier = Modifier.size(5.dp))
         Text(
             text = agentName,
             textAlign = TextAlign.Center,
@@ -268,28 +231,72 @@ fun AgentProfile(
     }
 }
 
+@Composable
+fun CustomPropertyIconText(
+    modifier: Modifier = Modifier,
+    text: String,
+    @DrawableRes icon: Int,
+    iconSize: Dp = 20.dp
+) {
+    Box(
+        modifier = modifier
+            .wrapContentSize(align = Alignment.Center)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center
+        ) {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.labelSmall
+            )
+            Spacer(modifier = Modifier.width(2.dp))
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = "property icon",
+                modifier = Modifier.size(iconSize)
+            )
+        }
+    }
+}
+
 /**
  * Previews
  */
 @Preview(showBackground = true)
 @Composable
-fun PreviewErrorScreen() = GenericErrorComposable(
-    modifier = Modifier.wrapContentSize(),
+fun PreviewGenericError() = GenericErrorComposable(
     onErrorRetryClick = {}
 )
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewPropertyContentDetail() = PropertyContent(
+fun PreviewPropertyInformation() = PropertyInformation(
     property = PropertyEntity.DEFAULT,
-    isDetailView = true
+    modifier = Modifier.padding(10.dp)
 )
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewPropertyContentDefault() = PropertyContent(
+fun PreviewExpandedPrpoertyInformation() = PropertyInformation(
     property = PropertyEntity.DEFAULT,
-    isDetailView = false
+    isExpended = true,
+    modifier = Modifier.padding(10.dp)
+)
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewExpandedPropertyContent() = PropertyContent(
+    property = PropertyEntity.DEFAULT,
+    isExpended = true,
+    modifier = Modifier.padding(10.dp)
+)
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewPropertyContent() = PropertyContent(
+    property = PropertyEntity.DEFAULT,
+    modifier = Modifier.padding(10.dp)
 )
 
 @Preview(showBackground = true)
@@ -298,15 +305,3 @@ fun PreviewAgentProfile() = AgentProfile(
     agentName = "Agent Name",
     agentAvatarUrl = ""
 )
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewRoomSpaceQuantity() = RoomSpaceQuantityRow(
-    bedroomCount = 3,
-    bathroomCount = 2,
-    carspaceCount = 1
-)
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewPropertyInformation() = PropertyInformation(property = PropertyEntity.DEFAULT)

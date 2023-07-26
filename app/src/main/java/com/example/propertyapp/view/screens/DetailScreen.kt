@@ -2,8 +2,6 @@
 
 package com.example.propertyapp.view.screens
 
-import androidx.compose.animation.AnimatedContentTransitionScope
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,39 +30,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.compose.composable
 import coil.compose.AsyncImage
 import com.example.propertyapp.R
-import com.example.propertyapp.view.navigation.Destination
 import com.example.propertyapp.domain.model.PropertyEntity
 import com.example.propertyapp.view.PropertyViewModel
-
-fun NavGraphBuilder.detailNavGraph(
-    vm: PropertyViewModel,
-    onBackClick: () -> Unit
-) {
-    composable(
-        route = Destination.DETAIL_SCREEN.name,
-        enterTransition = {
-            slideIntoContainer(
-                animationSpec = tween(500),
-                towards = AnimatedContentTransitionScope.SlideDirection.Start
-            )
-        },
-        exitTransition = {
-            this.slideOutOfContainer(
-                animationSpec = tween(500),
-                towards = AnimatedContentTransitionScope.SlideDirection.End
-            )
-        }
-    ) {
-        DetailScreen(
-            vm = vm,
-            onBackClick = onBackClick
-        )
-    }
-}
 
 @Composable
 fun DetailScreen(
@@ -111,7 +80,7 @@ fun PropertyDetailComposable(
         PropertyContent(
             modifier = Modifier.padding(horizontal = 15.dp),
             property = property,
-            isDetailView = true
+            isExpended = true
         )
     }
 }

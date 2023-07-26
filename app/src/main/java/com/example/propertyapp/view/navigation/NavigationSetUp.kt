@@ -7,8 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.propertyapp.view.PropertyViewModel
-import com.example.propertyapp.view.screens.detailNavGraph
-import com.example.propertyapp.view.screens.listNavGraph
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 
 @Composable
