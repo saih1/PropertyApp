@@ -36,8 +36,4 @@ class PropertyViewModel @Inject constructor(
     fun selectProperty(property: PropertyEntity) {
         _selectedProperty.value = property
     }
-
-    fun clearPropertySelection() {
-        _selectedProperty.value = null
-    }
 }
