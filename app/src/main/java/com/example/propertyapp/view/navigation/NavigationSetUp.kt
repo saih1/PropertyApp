@@ -28,7 +28,6 @@ fun NavigationSetUp(controller: NavHostController) {
         detailNavGraph(
             vm = vm,
             onBackClick = {
-                vm.clearPropertySelection()
                 controller.navigate(Destination.LIST_SCREEN.name) {
                     // Clear the back stack when navigating to the List screen
                     popUpTo(controller.graph.startDestinationId)

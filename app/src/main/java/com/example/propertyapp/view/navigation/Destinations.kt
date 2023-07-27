@@ -2,6 +2,8 @@ package com.example.propertyapp.view.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.example.propertyapp.domain.model.PropertyEntity
@@ -24,14 +26,17 @@ fun NavGraphBuilder.listNavGraph(
         route = Destination.LIST_SCREEN.name,
         enterTransition = {
             slideIntoContainer(
-                animationSpec = tween(500),
+                animationSpec = tween(durationMillis = 500),
                 towards = AnimatedContentTransitionScope.SlideDirection.Start
             )
         },
         exitTransition = {
-            this.slideOutOfContainer(
-                animationSpec = tween(500),
-                towards = AnimatedContentTransitionScope.SlideDirection.End
+            scaleOut(
+                animationSpec = tween(
+                    durationMillis = 700,
+                    delayMillis = 200
+                ),
+                targetScale = 0.8f
             )
         }
     ) {
@@ -52,14 +57,23 @@ fun NavGraphBuilder.detailNavGraph(
         route = Destination.DETAIL_SCREEN.name,
         enterTransition = {
             slideIntoContainer(
-                animationSpec = tween(500),
+                animationSpec = tween(durationMillis = 500),
                 towards = AnimatedContentTransitionScope.SlideDirection.Start
             )
         },
         exitTransition = {
-            this.slideOutOfContainer(
-                animationSpec = tween(500),
+            slideOutOfContainer(
+                animationSpec = tween(
+                    durationMillis = 700,
+                    delayMillis = 200
+                ),
                 towards = AnimatedContentTransitionScope.SlideDirection.End
+            )
+        },
+        popEnterTransition = {
+            scaleIn(
+                animationSpec = tween(durationMillis = 700),
+                initialScale = 0.8f
             )
         }
     ) {
