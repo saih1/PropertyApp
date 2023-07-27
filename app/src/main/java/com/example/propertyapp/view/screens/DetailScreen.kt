@@ -2,6 +2,7 @@
 
 package com.example.propertyapp.view.screens
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +15,7 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,9 +27,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -51,7 +52,10 @@ fun DetailScreen(
             .wrapContentSize()
         ) {
             selectedProperty?.let {
-                PropertyDetailComposable(property = it)
+                PropertyDetailComposable(
+                    property = it,
+                    modifier = Modifier.padding(8.dp)
+                )
             }
         }
     }
@@ -63,7 +67,8 @@ fun PropertyDetailComposable(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(15.dp),
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         AsyncImage(
             model = property.propertyImage,
@@ -71,14 +76,12 @@ fun PropertyDetailComposable(
             contentScale = ContentScale.FillWidth,
             alignment = Alignment.Center,
             modifier = Modifier
-                .padding(start = 15.dp, end = 15.dp)
                 .fillMaxWidth()
                 .height(300.dp),
             placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
             error = painterResource(id = R.drawable.ic_launcher_foreground)
         )
         PropertyContent(
-            modifier = Modifier.padding(horizontal = 15.dp),
             property = property,
             isExpended = true
         )
@@ -102,10 +105,10 @@ fun DetailTopAppBar(
         },
         title = {
             Text(
-                text = "Property App",
-                textAlign = TextAlign.Center,
-                fontFamily = FontFamily.Monospace,
-                fontWeight = FontWeight.ExtraBold
+                text = stringResource(id = R.string.app_name),
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onBackground,
+                fontWeight = FontWeight.SemiBold
             )
         }
     )
@@ -121,5 +124,6 @@ fun PreviewDetailTopAppBar() = DetailTopAppBar {}
 @Preview(showBackground = true)
 @Composable
 fun PreviewPropertyDetailComposable() = PropertyDetailComposable(
-    property = PropertyEntity.DEFAULT
+    property = PropertyEntity.DEFAULT,
+    modifier = Modifier.padding(10.dp)
 )

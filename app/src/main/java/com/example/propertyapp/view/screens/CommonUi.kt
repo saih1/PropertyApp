@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -87,7 +88,8 @@ fun PropertyContent(
         modifier = modifier
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.weight(1f)
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.weight(1f)
         ) {
             PropertyInformation(
                 modifier = Modifier.weight(0.4f),
@@ -126,7 +128,12 @@ fun PropertyInformation(
             text = property.propertyAddress,
             style = MaterialTheme.typography.labelLarge,
             maxLines = 2,
-            color = MaterialTheme.colorScheme.outline
+            color = MaterialTheme.colorScheme.outline,
+            modifier = Modifier.height(
+                // Height is set to (line size * 2)
+                // to stay consistent for both 1 line or 2 lines
+                MaterialTheme.typography.labelLarge.lineHeight.value.dp * 2
+            )
         )
         // Bedroom, Bathroom, Car space
         RoomSpaceQuantityRow(
@@ -200,12 +207,13 @@ fun AgentProfile(
     agentName: String,
     agentAvatarUrl: String,
     modifier: Modifier = Modifier,
-    avatarSize: Dp = 60.dp
+    avatarSize: Dp = 60.dp,
+    horizontalAlignment: Alignment.Horizontal = Alignment.End
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier
+        modifier = modifier,
+        horizontalAlignment = horizontalAlignment,
+        verticalArrangement = Arrangement.Center
     ) {
         Box(
             modifier = Modifier
